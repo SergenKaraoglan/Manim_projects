@@ -1,2 +1,2 @@
-# manim_tutorial
+# Manim projects
  
