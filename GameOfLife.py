@@ -1,11 +1,10 @@
 from manim import *
-import numpy as np
 import random
 
 class GameOfLife(Scene):
     def construct(self):
         # time interval between generations
-        time = 0.2
+        time = 0.1
 
         # initialise grid
         self.create_grid(16, 28)
@@ -24,9 +23,9 @@ class GameOfLife(Scene):
 
     def create_grid(self, num_row, num_col):
         # create cells
-        self.cells = [Square(color=BLUE_E, side_length=0.5) for _ in range(num_row*num_col)]
+        cells = [Square(color=BLUE_E, side_length=0.5) for _ in range(num_row*num_col)]
         # arrange cells into a grid
-        self.grid = VGroup(*self.cells).arrange_in_grid(rows=num_row, cols=num_col, buff=0,)
+        self.grid = VGroup(*cells).arrange_in_grid(rows=num_row, cols=num_col, buff=0,)
         # generate rules
         self.rules = [[random.randint(0, 0) for _ in range(num_col)] for _ in range(num_row)]
         self.rules[1][2] = 1
@@ -43,9 +42,9 @@ class GameOfLife(Scene):
                 x = i * (len(self.rules[0])) + j
                 # change colour according to cell state
                 if self.rules[i][j]:
-                    self.cells[x].set_fill(WHITE, opacity = 1)
+                    self.grid[x].set_fill(WHITE, opacity = 1)
                 else:
-                    self.cells[x].set_fill(BLACK, opacity = 1)
+                    self.grid[x].set_fill(BLACK, opacity = 1)
                 
                 
 
@@ -72,10 +71,3 @@ class GameOfLife(Scene):
                 #print(live)
         # update rules
         self.rules = new_rules
-
-
-
-
-
-
-
