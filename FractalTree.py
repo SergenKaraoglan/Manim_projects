@@ -3,31 +3,27 @@ from math import pi, sin, cos
 
 class FractalTree(Scene):
     def construct(self):
-        angel = 2*pi / 11
+        angle = 2*pi / 11
         ratio = 0.75
-        length = 2
-        base = -3
+        length = 1.5
+        y = -4
+        x = 0
 
-        queue = [[Line([0,base,0], [0,base+length,0]), base+length, length*ratio]]
-        for i in range(10):
-            line, base, length = queue.pop(0)
+        queue = [[Line([x,y,0], [x,y+length,0]), x, y+length, length*ratio, angle]]
+        for i in range(200):
+            line, x, y, length, angle2 = queue.pop(0)
             self.add(line)
-            if i:
-                x = y = 0
-                if i % 2:
-                    x, y = self.get_position(length, angel, base)
-                else:
-                    x, y = self.get_position(length, -angel, base)
-                
-                line.put_start_and_end_on([x,y,0], [x+length,y+length,0])
+            x2, y2 = self.get_position(length, angle2)
+                    
 
             for i in range(2):
-                queue.append([Line([0, base, 0], [0, base + length, 0]), base+length, length*ratio])
+                if i % 2:
+                    x2 = -x2
+                queue.append([Line([x, y, 0], [x + x2, y + y2, 0]), x + x2, y + y2, length*ratio, angle2])
 
-        #self.play(root.animate.put_start_and_end_on([0,base,0], [0, base+length, 0]))
 
-    def get_position(self, length, angel, base):
-        x = base + length * sin(angel)
-        y = - base -length * cos(angel)
+    def get_position(self, length, angle):
+        x = length * sin(angle)
+        y = length * cos(angle)
 
-        return x, y
+        return x, y 
