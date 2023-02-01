@@ -7,9 +7,10 @@ class DoublePendulum(Scene):
         g = 9.81
         length1, length2 = 1, 1
         mass1, mass2 = 1, 1
-        theta1, theta2 = 0, 0
+        theta1, theta2 = 100, 0
         dotRadius = 0.16
         v1, v2 = 0, 0
+        a1, a2 = 0, 0
 
         # positions
         x1 = length1 * sin(theta1)
@@ -18,27 +19,29 @@ class DoublePendulum(Scene):
         y2 = y1 - (length2 * cos(theta2))
 
         originPoint = Dot(point=[0, 0.08, 0])
-        # visualise pendulum 1
-        l1 = Line([0,0,0], [0,-length1,0])
-        m1 = Dot(point=[0., -length1 - dotRadius, 0.],radius=dotRadius)
-        pendulum1 = VGroup(l1, m1)
-        self.add(originPoint, pendulum1)
+        # pendulum 1
+        self.l1 = Line([0,0,0], [0,-length1,0])
+        self.p1 = Dot(point=[0., -length1 - dotRadius, 0.],radius=dotRadius)
+        
 
-        print(l1.get_angel())
+        # pendulum 2
+        self.l2 = Line([0,-length1 - (dotRadius*2),0], [0,-(length1+length2) - (dotRadius*2),0])
+        self.p2 = Dot(point=[0,-(length1 + length2) - (dotRadius*3),0], radius=dotRadius)
 
-        # visualise pendulum 2
-        l2 = Line([0,-length1 - (dotRadius*2),0], [0,-(length1+length2) - (dotRadius*2),0])
-        m2 = Dot(point=[0,-(length1 + length2) - (dotRadius*3),0], radius=dotRadius)
-        pendulum2 = VGroup(l2, m2)
-        self.add(pendulum2)
+        # pendulum animation
+        def pendulum_updater(mobj, dt):
+            self.l1.put_start_and_end_on([0,0,0], [1,1,1])
+            self.p1.move_to([0,0,0])
+            self.l2.put_start_and_end_on([0,0,0], [1,1,1])
+            self.p2.move_to([0,0,0])
+            print('x')
 
-        pendulum1.add_updater(self.pendulum_updater)
+        pendulum = VGroup(self.l1, self.p1, self.l2, self.p2)
+        self.add(pendulum)
+        pendulum.add_updater(pendulum_updater)
+        self.wait(3)
 
-
-
-
-    def pendulum_updater(self, mobj, dt):
-        .put_start_and_end_on()
+        self.calc(g, length1, length2, mass1, mass2, theta1, theta2, v1, v2)
 
 
     def calc(g, length1, length2, mass1, mass2, theta1, theta2, v1, v2):
