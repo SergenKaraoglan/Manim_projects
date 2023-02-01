@@ -31,11 +31,16 @@ class DoublePendulum(Scene):
             self.theta1 += self.v1*dt
             self.theta2 += self.v2*dt
             x1, y1, x2, y2 = self.get_position(length1, length2)
+
+            # draw trajectory
+            self.add(Line(p2.get_center(), [x2, y2, 0], color=BLUE_E))
+
             l1.put_start_and_end_on([0,0,0], [x1, y1,0])
             p1.move_to([x1,y1,0])
             l2.put_start_and_end_on([x1,y1,0], [x2,y2,0])
             p2.move_to([x2,y2,0])
 
+        # plot pendulum
         originPoint = Dot(point=[0, 0, 0])
         pendulum = VGroup(l1, p1, l2, p2)
         self.add(pendulum, originPoint)
@@ -55,7 +60,8 @@ class DoublePendulum(Scene):
         a2=(2*sin(self.theta1-self.theta2)*(num1+num2))/(length2*denominator)
 
         return a1, a2
-
+    
+    # base x, y coordinates of pendulums
     def get_position(self, length1, length2):
         x1 = length1 * sin(self.theta1)
         y1 = -length1 * cos(self.theta1)
