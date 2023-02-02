@@ -11,7 +11,7 @@ class FractalTree(Scene):
         x = 0
 
         # queue to contain lines (branches)
-        queue = [[Line([x,y,0], [x,y+length,0]), x, y+length, length*ratio, angle]]
+        queue = [[Line([x,y,0], [x,y+length,0]), x, y+length, length*ratio, 0]]
         for i in range(1000):
             # get branch
             line, x, y, length, angle2 = queue.pop(0)
@@ -24,7 +24,7 @@ class FractalTree(Scene):
                 
                 # get inverse x coordinate for second branch
                 if i % 2:
-                    x2, y2 = self.get_position(length, angle2 - angle*3)
+                    x2, y2 = self.get_position(length, angle2 - angle)
                     queue.append([Line([x, y, 0], [x + x2, y + y2, 0]), x + x2, y + y2, length * ratio, angle2 - angle])
                 else:
                     x2, y2 = self.get_position(length, angle2 + angle)
