@@ -17,7 +17,6 @@ class FractalTree(Scene):
             line, x, y, length, angle2 = queue.pop(0)
             # draw branch
             self.add(line)
-            #self.wait(1)
                     
             for i in range(2):
                 # get branch position
