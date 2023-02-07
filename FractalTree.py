@@ -13,7 +13,7 @@ class FractalTree(Scene):
 
         # current and max depth of tree
         depth = 0
-        maxDepth = 10
+        maxDepth = 5
         # queue to contain lines (branches)
         queue = [[Line([x,y,0], [x,y+length,0], stroke_width=strokeWidth), x, y+length, length*ratio, 0, depth, strokeWidth*ratio]]
         branches = [[] for _ in range(maxDepth)]
@@ -39,11 +39,8 @@ class FractalTree(Scene):
                                   x + x2, y + y2, length * ratio, angle2 + angle, depth+1, strokeWidth*ratio])
 
         # animate branches per depth
-        for i in range(len(branches)):
-            branchGroup = VGroup(*branches[i])
-            self.play(*[Create(branch) for branch in branchGroup], run_time = 1.5)
-        # animate all branches at the same time
-        #self.play(*[Create(branch) for i in range(maxDepth) for branch in branches[i]], run_time = 3)
+        self.play(LaggedStart(*[AnimationGroup(*[Create(branch) for branch in branches[i]], run_time=1.5) for i in range(maxDepth)], 
+                              lag_ratio = 0.75))
 
 
     # get x, y coordinate using angle and length
