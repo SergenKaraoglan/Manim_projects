@@ -31,21 +31,21 @@ class DoublePendulum(Scene):
             self.theta1 += self.v1*dt
             self.theta2 += self.v2*dt
             x1, y1, x2, y2 = self.get_position(length1, length2)
+            
 
-            # draw trajectory
-            self.add(Line(p2.get_center(), [x2, y2, 0], color=BLUE_E))
-
+            # update pendulum position
             l1.put_start_and_end_on([0,0,0], [x1, y1,0])
             p1.move_to([x1,y1,0])
             l2.put_start_and_end_on([x1,y1,0], [x2,y2,0])
             p2.move_to([x2,y2,0])
 
-        # plot pendulum
+        # plot pendulum and traced path
+        trace = TracedPath(p2.get_center, dissipating_time=1, stroke_opacity=[0, 1])
         originPoint = Dot(point=[0, 0, 0])
         pendulum = VGroup(l1, p1, l2, p2)
-        self.add(pendulum, originPoint)
+        self.add(pendulum, originPoint, trace)
         pendulum.add_updater(pendulum_updater)
-        self.wait(30)
+        self.wait(10)
 
     def calc_accel(self, g, mass1, mass2, length1, length2):
         num1=-g*(2*mass1+mass2)*sin(self.theta1)-mass2*g*sin(self.theta1-2*self.theta2)
