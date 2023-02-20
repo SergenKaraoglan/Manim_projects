@@ -10,12 +10,13 @@ class FractalTree(Scene):
         y = -3
         x = 0
         strokeWidth = 5
+        lineColor = BLUE_E
 
         # current and max depth of tree
         depth = 0
-        maxDepth = 5
+        maxDepth = 9
         # queue to contain lines (branches)
-        queue = [[Line([x,y,0], [x,y+length,0], stroke_width=strokeWidth), x, y+length, length*ratio, 0, depth, strokeWidth*ratio]]
+        queue = [[Line([x,y,0], [x,y+length,0], stroke_width=strokeWidth, color=lineColor), x, y+length, length*ratio, 0, depth, strokeWidth*ratio]]
         branches = [[] for _ in range(maxDepth)]
         while True:
             # get branch
@@ -31,15 +32,15 @@ class FractalTree(Scene):
                 # get inverse x coordinate for second branch
                 if i % 2:
                     x2, y2 = self.get_position(length, angle2 - angle)
-                    queue.append([Line([x, y, 0], [x + x2, y + y2, 0], stroke_width=strokeWidth), 
+                    queue.append([Line([x, y, 0], [x + x2, y + y2, 0], stroke_width=strokeWidth, color=lineColor), 
                                   x + x2, y + y2, length * ratio, angle2 - angle, depth+1, strokeWidth*ratio])
                 else:
                     x2, y2 = self.get_position(length, angle2 + angle)
-                    queue.append([Line([x, y, 0], [x + x2, y + y2, 0], stroke_width=strokeWidth), 
+                    queue.append([Line([x, y, 0], [x + x2, y + y2, 0], stroke_width=strokeWidth, color=lineColor), 
                                   x + x2, y + y2, length * ratio, angle2 + angle, depth+1, strokeWidth*ratio])
 
         # animate branches per depth
-        self.play(Succession(*[AnimationGroup(*[Create(branch) for branch in branches[i]], run_time=1, rate_func = rate_functions.linear) for i in range(maxDepth)], 
+        self.play(Succession(*[AnimationGroup(*[Create(branch) for branch in branches[i]], run_time=1.5, rate_func = rate_functions.linear) for i in range(maxDepth)], 
                               lag_ratio = 0.9, rate_func = rate_functions.linear))
 
 
