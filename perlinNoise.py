@@ -12,8 +12,6 @@ class PerlinNoise(Scene):
             y = self.sample(x, gradients)
             print(y, x)
             self.add(Dot([x - 5, (y+1)**2, 0]))
-         
-       
 
     
     def sample(self, x, gradients):

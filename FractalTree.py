@@ -39,8 +39,8 @@ class FractalTree(Scene):
                                   x + x2, y + y2, length * ratio, angle2 + angle, depth+1, strokeWidth*ratio])
 
         # animate branches per depth
-        self.play(LaggedStart(*[AnimationGroup(*[Create(branch) for branch in branches[i]], run_time=1.5, rate_func = rate_functions.linear) for i in range(maxDepth)], 
-                              lag_ratio = 0.8, rate_func = rate_functions.linear))
+        self.play(Succession(*[AnimationGroup(*[Create(branch) for branch in branches[i]], run_time=1, rate_func = rate_functions.linear) for i in range(maxDepth)], 
+                              lag_ratio = 0.9, rate_func = rate_functions.linear))
 
 
     # get x, y coordinate using angle and length
