@@ -12,7 +12,7 @@ class GameOfLife(Scene):
         self.wait(time)
 
         # simulate game of life
-        num_generations= 10
+        num_generations= 50
         for _ in range(num_generations):
             self.update_rules()
             self.update_grid()
@@ -28,11 +28,13 @@ class GameOfLife(Scene):
         self.grid = VGroup(*cells).arrange_in_grid(rows=num_row, cols=num_col, buff=0,)
         # generate rules
         self.rules = [[random.randint(0, 0) for _ in range(num_col)] for _ in range(num_row)]
-        self.rules[1][2] = 1
-        self.rules[2][3] = 1
-        self.rules[3][1] = 1
-        self.rules[3][2] = 1
-        self.rules[3][3] = 1
+        
+        # create gliders that create a pattern within index range
+        self.createGlider(5, 5)
+        self.createGlider2(5, 10)
+        self.createGlider(5, 15)
+        self.createGlider2(5, 20)
+
         # set cell colours based on rules
         self.update_grid()
 
@@ -44,9 +46,7 @@ class GameOfLife(Scene):
                 if self.rules[i][j]:
                     self.grid[x].set_fill(WHITE, opacity = 1)
                 else:
-                    self.grid[x].set_fill(BLACK, opacity = 1)
-                
-                
+                    self.grid[x].set_fill(BLACK, opacity = 1)         
 
 
     def update_rules(self):
@@ -71,3 +71,18 @@ class GameOfLife(Scene):
                 #print(live)
         # update rules
         self.rules = new_rules
+
+    def createGlider(self, x, y):
+        self.rules[x][y] = 1
+        self.rules[x+1][y+1] = 1
+        self.rules[x+2][y+1] = 1
+        self.rules[x+2][y] = 1
+        self.rules[x+2][y-1] = 1
+    
+    # reverse glider
+    def createGlider2(self, x, y):
+        self.rules[x][y] = 1
+        self.rules[x-1][y-1] = 1
+        self.rules[x-2][y-1] = 1
+        self.rules[x-2][y] = 1
+        self.rules[x-2][y+1] = 1
