@@ -6,5 +6,5 @@
 ## Double Pendulum
 ![](gifs/DoublePendulum.gif)
 
-# GameOfLife
+# Game Of Life
 ![](gifs/GameOfLife.gif)
