@@ -15,7 +15,7 @@ class DoublePendulum(Scene):
         # pendulum variables
         length1, length2 = 1, 1
         mass1, mass2 = 2, 2
-        self.theta1, self.theta2 = pi/2, pi/2
+        self.theta1, self.theta2 = pi/2, pi/4
         print(self.theta1)
         self.v1, self.v2 = 0, 0
 
@@ -51,7 +51,7 @@ class DoublePendulum(Scene):
         # pendulum variables
         length3, length4 = 1, 1
         mass3, mass4 = 2, 2
-        self.theta3, self.theta4 = pi/2-0.01, pi/2
+        self.theta3, self.theta4 = pi/2-0.01, pi/4
         self.v3, self.v4 = 0, 0
 
         # get pendulum coordinates
@@ -80,7 +80,7 @@ class DoublePendulum(Scene):
         
         pendulum2.add_updater(pendulum_updater2)
 
-        self.wait(10)
+        self.wait(20)
 
     def create_double_pendulum(self, x1, y1, x2, y2, dotRadius):
         # pendulum 1

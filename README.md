@@ -1,4 +1,7 @@
 # Manim projects
  
- ## Fractal Tree
+## Fractal Tree
 ![](gifs/FractalTree.gif)
+
+## Double Pendulum
+![](gifs/DoublePendulum.gif)
