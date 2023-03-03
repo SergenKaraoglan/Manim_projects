@@ -61,8 +61,17 @@ class GameOfLife(Scene):
                         if k != 0 or l != 0:
                             y = i + k
                             x = j + l
-                            if y >= 0 and y < len(self.rules) and x >= 0 and x < len(self.rules[0]):
-                                live += self.rules[y][x]
+                            # wrap around
+                            if y < 0:
+                                y = len(self.rules) - 1
+                            if y >= len(self.rules):
+                                y = 0
+                            if x < 0:
+                                x = len(self.rules[0]) - 1
+                            if x >= len(self.rules[0]):
+                                x = 0
+                            
+                            live += self.rules[y][x]
                 
                 if self.rules[i][j] and live != 2 and live != 3:
                     new_rules[i][j] = 0
