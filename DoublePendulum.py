@@ -7,8 +7,10 @@ class DoublePendulum(Scene):
         g = 9.8
         dotRadius = 0.16
 
+        self.color = BLUE_E
+
         # create origin point
-        originPoint = Dot(point=[0, 0, 0])
+        originPoint = Dot(point=[0, 0, 0], color=self.color)
         self.add(originPoint)
 
         # first double pendulum
@@ -80,16 +82,16 @@ class DoublePendulum(Scene):
         
         pendulum2.add_updater(pendulum_updater2)
 
-        self.wait(20)
+        self.wait(10)
 
     def create_double_pendulum(self, x1, y1, x2, y2, dotRadius):
         # pendulum 1
-        l1 = Line([0,0,0], [x1,y1,0])
-        p1 = Dot(point=[x1, y1, 0], radius=dotRadius)
+        l1 = Line([0,0,0], [x1,y1,0], color=self.color)
+        p1 = Dot(point=[x1, y1, 0], radius=dotRadius, color=self.color)
 
         # pendulum 2
-        l2 = Line([x1,y1,0], [x2, y2,0])
-        p2 = Dot(point=[x2, y2, 0], radius=dotRadius)
+        l2 = Line([x1,y1,0], [x2, y2,0], color=self.color)
+        p2 = Dot(point=[x2, y2, 0], radius=dotRadius, color=self.color)
 
         return l1, p1, l2, p2
 
