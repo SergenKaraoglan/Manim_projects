@@ -5,9 +5,13 @@ class GameOfLife(Scene):
     def construct(self):
         # time interval between generations
         time = 0.1
+        side_length = 0.5
+        num_row = int(8 * (1//side_length))
+        num_col = int(14 * (1//side_length))
+        print(num_row, num_col)
 
         # initialise grid
-        self.create_grid(16, 28)
+        self.create_grid(num_row, num_col, side_length)
         self.add(self.grid)
         self.wait(time)
 
@@ -21,19 +25,20 @@ class GameOfLife(Scene):
             #print(self.rules)
 
 
-    def create_grid(self, num_row, num_col):
+    def create_grid(self, num_row, num_col, side_length):
         # create cells
-        cells = [Square(color=BLUE_E, side_length=0.5) for _ in range(num_row*num_col)]
+        cells = [Square(color=BLUE_E, side_length=side_length) for _ in range(num_row*num_col)]
         # arrange cells into a grid
         self.grid = VGroup(*cells).arrange_in_grid(rows=num_row, cols=num_col, buff=0,)
         # generate rules
         self.rules = [[random.randint(0, 0) for _ in range(num_col)] for _ in range(num_row)]
         
-        # create gliders that create a pattern within index range
+        # create gliders that create a pattern within index range 0-15
         self.createGlider(5, 5)
         self.createGlider2(5, 10)
         self.createGlider(5, 15)
         self.createGlider2(5, 20)
+        self.createGlider(5, 25)
 
         # set cell colours based on rules
         self.update_grid()
@@ -44,7 +49,7 @@ class GameOfLife(Scene):
                 x = i * (len(self.rules[0])) + j
                 # change colour according to cell state
                 if self.rules[i][j]:
-                    self.grid[x].set_fill(WHITE, opacity = 1)
+                    self.grid[x].set_fill(BLUE_C, opacity = 1)
                 else:
                     self.grid[x].set_fill(BLACK, opacity = 1)         
 
