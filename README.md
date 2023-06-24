@@ -6,5 +6,8 @@
 ## Double Pendulum
 ![](gifs/DoublePendulum.gif)
 
-# Game Of Life
+# Conway's Game Of Life
 ![](gifs/GameOfLife.gif)
+
+# Depth First Search
+![](gifs/DepthSearch.mp4)
