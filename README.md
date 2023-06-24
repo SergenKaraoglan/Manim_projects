@@ -10,4 +10,4 @@
 ![](gifs/GameOfLife.gif)
 
 # Depth First Search
-![](gifs/DepthSearch.mp4)
+![](gifs/DepthSearch.gif)
