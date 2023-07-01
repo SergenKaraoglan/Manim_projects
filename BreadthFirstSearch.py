@@ -5,12 +5,12 @@ class breadthSearch(Scene):
     def construct(self):
         self.finished = False
         self.seen = set((0,0))
-        self.queue = [(0,0)]
-        self.dirs = [(0,1), (-1,0), (0,-1), (1,0), ]
+        self.queue = [(0,0,0)]
+        self.dirs = [(0,1), (-1,0), (0,-1), (1,0)]
         # time interval between generations
         self.time = 0.1
         # grid size
-        side_length = 1
+        side_length = 0.5
         self.num_row = int(8 * (1//side_length))
         self.num_col = int(14 * (1//side_length))
 
@@ -19,8 +19,21 @@ class breadthSearch(Scene):
         self.add(self.grid)
         self.wait(self.time)
 
+        self.cells = []
         self.breadthSearch()
-
+        
+        self.cells.sort()
+        cur = 0
+        for i in range(len(self.cells)):
+            depth = self.cells[i][0]
+            i = self.cells[i][1]
+            if depth != cur:
+                cur += 1
+                self.add(self.grid)
+                self.wait(self.time)
+            self.grid[i].set_fill(BLUE_C, opacity = 1)
+        
+        self.add(self.grid)
 
     def create_grid(self, num_row, num_col, side_length):
         # create cells
@@ -40,29 +53,24 @@ class breadthSearch(Scene):
         self.grid[self.goal].set_fill(RED, opacity=1)
         self.rules[self.goal] = 2
     
-    def update_grid(self,x, y):
-        i = y*self.num_col + x
-        self.grid[i].set_fill(BLUE_C, opacity = 1)
-        self.add(self.grid)
-        self.wait(self.time)
-    
     def breadthSearch(self):
         #print(self.seen)
         if self.queue and not self.finished:
             curCell = self.queue.pop(0)
             x = curCell[0]
             y = curCell[1]
+            depth = curCell[2]
             i = y*self.num_col + x
             if self.rules[i] == 2:
                 self.finished = True
                 return
-            self.update_grid(x, y)
+            self.cells.append((depth, i))
 
             for dir in self.dirs:
                 x2 = x+dir[0]
                 y2 = y+dir[1]
                 i = y2*self.num_col + x2
                 if -1 < x2 < self.num_col and -1 < y2 < self.num_row and not ((x2,y2) in self.seen) and self.rules[i] != 1:
-                    self.queue.append((x2, y2))
+                    self.queue.append((x2, y2, depth+1))
                     self.seen.add((x2, y2))
             self.breadthSearch()
