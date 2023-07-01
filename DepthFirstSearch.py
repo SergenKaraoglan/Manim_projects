@@ -3,11 +3,12 @@ import random
 
 class DepthSearch(Scene):
     def construct(self):
+        self.finished = False
         self.seen = set()
         # time interval between generations
         self.time = 0.1
         # grid size
-        side_length = 1
+        side_length = 0.5
         self.num_row = int(8 * (1//side_length))
         self.num_col = int(14 * (1//side_length))
 
@@ -28,10 +29,14 @@ class DepthSearch(Scene):
         self.rules = [round(random.random()-0.3) for _ in range(num_col) for _ in range(num_row)]
         # print(self.rules)
 
+        self.goal = random.randint(10, len(self.rules)-1)
         # set cell colours based on rules
         for i in range(len(self.rules)):
             if self.rules[i] == 1:
                 self.grid[i].set_fill(WHITE, opacity=1)
+        
+        self.grid[self.goal].set_fill(RED, opacity=1)
+        self.rules[self.goal] = 2
     
     def update_grid(self,x, y):
         i = y*self.num_col + x
@@ -42,7 +47,10 @@ class DepthSearch(Scene):
     def depthSearch(self, x, y):
         #print(self.seen)
         i = y*self.num_col + x
-        if -1 < x < self.num_col and -1 < y < self.num_row and not ((x,y) in self.seen) and not self.rules[i]:
+        if -1 < x < self.num_col and -1 < y < self.num_row and not ((x,y) in self.seen) and self.rules[i] != 1 and not self.finished:
+            if self.rules[i] == 2:
+                self.finished = True
+                return
             #print(x, y)
             self.seen.add((x, y))
             self.update_grid(x, y)
